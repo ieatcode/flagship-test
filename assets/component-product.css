@@ -1,0 +1,17 @@
+#AddToCartForm button#AddToCart {
+    border: none;
+    padding: 3px 10px;
+}
+
+#AddToCartForm .product-available {
+    background-color: green;
+    color: #FFF;
+}
+#AddToCartForm .product-available:hover {
+    background-color: blue;
+}
+
+#AddToCartForm .product-out-of-stock {
+    background-color: #ddd;
+    cursor: not-allowed;
+}
