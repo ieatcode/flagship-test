@@ -2,46 +2,65 @@ class ProductDetails extends HTMLElement {
   constructor() {
     super()
     this.addToCartEl = document.getElementById('AddToCart');
+    this.toggleNotesEl = document.getElementById('add-instructions');
+    this.notesInputEl = document.getElementById('order-notes');
+    this.notesWrapEl = document.querySelector('.order-notes');
+    this.orderNote = ''
     this.addToCart = this.addToCart.bind(this)
     this.init()
   }
 
   getCartItems = () => {
-    return fetch(`${routes.cart_url}`,{...fetchConfig(), method: 'GET'})
+    return fetch(`${routes.cart_url}`, {...fetchConfig(), method: 'GET'})
       .then(response => response.json())
-      .then(state => state)
+      .then(state => {
+        this.orderNote = state.note
+        console.log('received items from cart')
+        return state
+      })
+      .catch((error) => console.log({error})
+      )
+  }
+
+  addNote = (payload) => {
+    // this.orderNote
+    console.log(payload, this.orderNote)
   }
 
   addToCart = async () => {
     const cartItems = await this.getCartItems()
     if (cartItems) {
-      const formPayload = {
-        id: parseInt(document.getElementById('productSelect').value, 10),
-        quantity: parseInt(document.getElementById('Quantity').value, 10),
-        properties: {
-          cart_index: cartItems?.items?.length
-        }
-      }
+      const id = parseInt(document.getElementById('productSelect').value, 10)
+      const quantity = parseInt(document.getElementById('Quantity').value, 10)
+      const properties = {cart_index: cartItems?.items?.length}
+      const note = `${this.orderNote}
+        ${id}: ${this.notesInputEl.value}
+        `
+      const formPayload = {id, quantity, properties, note}
       const body = JSON.stringify(formPayload);
       fetch(`${routes.cart_add_url}`, {...fetchConfig(), ...{body}})
-        .then((response) => {
-          if (!response.ok) throw Error(response?.status)
-          return response.text();
-        })
+        .then((response) => response.text())
         .then((state) => {
           const payload = JSON.parse(state)
-          console.log(payload)
-        }).catch((error) => {
-        console.log({error})
-      })
+        }).catch((error) => console.log({error}))
+    }
+  }
+
+  toggleNotes = () => {
+    if (this.toggleNotesEl.checked) {
+      this.notesWrapEl.style = "display: grid"
+    } else {
+      this.notesWrapEl.style = "display: none"
     }
   }
 
   init() {
-    this.addToCartEl.addEventListener('click', (event) => {
-      event.preventDefault();
-
-      this.addToCart()
+    this.addToCartEl.addEventListener('click', async (event) => {
+      event.preventDefault()
+      await this.addToCart()
+    })
+    this.toggleNotesEl.addEventListener('change', (event) => {
+      this.toggleNotes()
     })
   }
 

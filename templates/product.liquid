@@ -34,7 +34,19 @@
       {% assign buttonDisable = 'disabled' %}
     {% endif %}
 
-      <button type="submit" name="add" class="{{ buttonClass }}" {{ buttonDisable }} id="AddToCart">Add to cart</button>
+    <button type="submit" name="add" class="{{ buttonClass }}" {{ buttonDisable }} id="AddToCart">Add to cart</button>
+
+    <div class="add-instructions">
+      <input id="add-instructions" type="checkbox"/>
+      <label for="add-instructions">
+        Add instructions
+      </label>
+    </div>
+
+    <div class="order-notes">
+      <label for="order-notes">Order Notes:</label>
+      <textarea id="order-notes" name="order-notes"></textarea>
+    </div>
 
   </form>
   <div>{{ product.description }}</div>
