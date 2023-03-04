@@ -1,0 +1,167 @@
+{% assign campaign_block = section.blocks | where: 'type', 'campaign' %}
+{% assign new_product_block = section.blocks | where: 'type', 'new-product' %}
+{% assign news_block = section.blocks | where: 'type', 'news' %}
+
+{% style %}
+  .card {
+    padding: 15px;
+    border: 1px solid #dddddd;
+    margin: 20px;
+  }
+  h3 {
+    font-weight: bold;
+  }
+  .campaign h3 {
+    color: red;
+  }
+  .new-product h3 {
+    color: blue;
+  }
+  .news h3 {
+    color: green;
+  }
+{% endstyle %}
+
+
+{% comment %}
+Block: Campaign
+Featured: true
+{% endcomment %}
+{% for block in campaign_block %}
+  {% if block.settings.featured %}
+    <div class="campaign card">
+      <h3>{{ block.settings.title }}</h3>
+      <div class="text">{{ block.settings.description }}</div>
+    </div>
+  {% endif %}
+{% endfor %}
+
+{% comment %}
+Block: Campaign
+Featured: false
+{% endcomment %}
+{% for block in campaign_block %}
+  {% if block.settings.featured == false %}
+    <div class="campaign card">
+      <h3>{{ block.settings.title }}</h3>
+      <div class="text">{{ block.settings.description }}</div>
+    </div>
+  {% endif %}
+{% endfor %}
+
+{% comment %}
+Block: New Product
+Featured: true
+{% endcomment %}
+{% for block in new_product_block %}
+  {% if block.settings.featured %}
+    <div class="new-product card">
+      <h3>{{ block.settings.title }} - {{ block.settings.featured }}</h3>
+      <div class="text">{{ block.settings.description }}</div>
+    </div>
+  {% endif %}
+{% endfor %}
+
+{% comment %}
+Block: New Product
+Featured: false
+{% endcomment %}
+{% for block in new_product_block %}
+  {% if block.settings.featured == false %}
+    <div class="new-product card">
+      <h3>{{ block.settings.title }} - {{ block.settings.featured }}</h3>
+      <div class="text">{{ block.settings.description }}</div>
+    </div>
+  {% endif %}
+{% endfor %}
+
+{% comment %}
+Block: News
+Featured: true
+{% endcomment %}
+{% for block in news_block %}
+  {% if block.settings.featured %}
+    <div class="news card">
+      <h3>{{ block.settings.title }}</h3>
+      <div class="text">{{ block.settings.description }}</div>
+    </div>
+  {% endif %}
+{% endfor %}
+
+{% comment %}
+Block: News
+Featured: false
+{% endcomment %}
+{% for block in news_block %}
+  {% if block.settings.featured == false %}
+    <div class="news card">
+      <h3>{{ block.settings.title }}</h3>
+      <div class="text">{{ block.settings.description }}</div>
+    </div>
+  {% endif %}
+{% endfor %}
+
+{% schema %}
+  {
+    "name": "News Carousel",
+    "tag": "section",
+    "class": "news-carousel",
+    "blocks": [
+      {
+        "name": "Campaign",
+        "type": "campaign",
+        "settings": [
+          {
+            "id": "title",
+            "label": "Title",
+            "type": "text"
+          }, {
+            "id": "description",
+            "label": "Description",
+            "type": "textarea"
+          }, {
+            "id": "featured",
+            "label": "Featured",
+            "type": "checkbox"
+          }
+        ]
+      }, {
+        "name": "New Product",
+        "type": "new-product",
+        "settings": [
+          {
+            "id": "title",
+            "label": "Title",
+            "type": "text"
+          }, {
+            "id": "description",
+            "label": "Description",
+            "type": "textarea"
+          }, {
+            "id": "featured",
+            "label": "Featured",
+            "type": "checkbox"
+          }
+        ]
+      }, {
+        "name": "News",
+        "type": "news",
+        "settings": [
+          {
+            "id": "title",
+            "label": "Title",
+            "type": "text"
+          }, {
+            "id": "description",
+            "label": "Description",
+            "type": "textarea"
+          }, {
+            "id": "featured",
+            "label": "Featured",
+            "type": "checkbox"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

@@ -22,11 +22,6 @@ class ProductDetails extends HTMLElement {
       )
   }
 
-  addNote = (payload) => {
-    // this.orderNote
-    console.log(payload, this.orderNote)
-  }
-
   addToCart = async () => {
     const cartItems = await this.getCartItems()
     if (cartItems) {
