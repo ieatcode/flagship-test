@@ -1,22 +1,38 @@
 #AddToCartForm {
-    padding: 10px 20px;
+  padding: 10px 20px;
 }
 
 #AddToCartForm button#AddToCart {
-    border: none;
-    padding: 3px 10px;
+  border: none;
+  padding: 3px 10px;
 }
 
 #AddToCartForm .product-available {
-    background-color: green;
-    color: #FFF;
+  background-color: green;
+  color: #fff;
 }
 
 #AddToCartForm .product-available:hover {
-    background-color: blue;
+  background-color: blue;
 }
 
 #AddToCartForm .product-out-of-stock {
-    background-color: #ddd;
-    cursor: not-allowed;
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+#AddToCartForm .quantity-details {
+  display: none;
+}
+
+.product-details {
+  text-align: left;
+}
+.product-details ul {
+  margin: 0;
+  padding: 0;
+}
+
+.product-details li {
+  list-style: none;
 }

@@ -52,9 +52,37 @@
       class="{{ buttonClass }}"
       {{ buttonDisable }}
       id="AddToCart">Add to cart</button>
-
   </form>
   <div>{{ product.description }}</div>
+  {% if product.id %}
+    <script type="text/javascript">
+      window.productId = {{ product.id }}
+    </script>
+  {% endif %}
+  <div class="product-details">
+    {% for variant in product.variants %}
+      {% if variant.available %}
+        <p>Variant {{ variant.title }} is available with quantity {{ variant.inventory_quantity }}.</p>
+      {% else %}
+        <p>Variant {{ variant.title }} is currently out of stock.</p>
+      {% endif %}
+    {% endfor %}
+    {% if cart.item_count == 0 %}
+      <p>Your cart is empty.</p>
+    {% else %}
+      <ul>
+        {% assign sortedItems = cart.items | sort: "properties.cart_index" | reverse %}
+        {% for item in sortedItems %}
+          <li>{{ item.properties.cart_index }} - {{ item.title }} ({{ item.quantity }}) - {{ item.price | money }}</li>
+        {% endfor %}
+        <li>Total: {{ cart.total_price | money }}</li>
+      </ul>
+    {% endif %}
+
+  </div>
 </product-details>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="{{ 'product.js' | asset_url }}" defer="defer"></script>
+
 {{ 'component-product.css' | asset_url | stylesheet_tag }}
