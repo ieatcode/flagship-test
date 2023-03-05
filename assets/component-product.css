@@ -20,8 +20,3 @@
     background-color: #ddd;
     cursor: not-allowed;
 }
-
-#AddToCartForm .order-notes {
-    display: none;
-    gap: 10px;
-}
